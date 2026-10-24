@@ -1,4 +1,6 @@
 import { DEMO_NOW, races } from './data.js';
+import { iconPaths } from './icons.js';
+import { defaultSession } from './session-selection.js';
 
 // The prototype clock advances from a fixed sample date. Replace this and
 // data.js with a schedule provider when the visual design is approved.
@@ -9,7 +11,9 @@ const normalizeZone = value => value === 'Asia/Calcutta' ? 'Asia/Kolkata' : valu
 let zone = 'Asia/Kolkata';
 try { zone = normalizeZone(localStorage.getItem('lights-out-zone') || Intl.DateTimeFormat().resolvedOptions().timeZone || zone); } catch {}
 try { new Intl.DateTimeFormat('en', { timeZone: zone }); } catch { zone = 'Asia/Kolkata'; }
-let selectedSession = 'race';
+let selectedSession;
+let autoSelectSession = true;
+let followNextWeekend = true;
 let currentRace;
 let currentPage = 'next';
 let pendingFocus = null;
@@ -23,15 +27,6 @@ const sessionStatus = s => demoNow() >= Date.parse(s.end) ? 'completed' : demoNo
 const arrow = '<span aria-hidden="true">↗</span>';
 const calendarIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 6h16v15H4zM4 11h16M8 3v6M16 3v6"/></svg>';
 const globeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>';
-const iconPaths = {
-  fp1: '<path d="M12 24h40M16 24l8-12h16l8 12M17 31l7 6h16l7-6M14 42h36M10 36v17M54 36v17M24 49h16"/>',
-  fp2: '<path d="M12 17l10-7h20l10 7v31l-10 7H22l-10-7ZM12 25h40M24 25v14h16V25M20 45h24"/>',
-  fp3: '<path d="M16 10h32l8 14v25L43 56H21L8 49V24ZM8 30h48M23 30l9 13 9-13M32 43v13"/>',
-  sq: '<path d="M10 18h28L24 39h28M10 18v12M52 39V27M15 48h20M35 9h16M45 5v8"/>',
-  sprint: '<path d="M8 45 30 12h23L31 45ZM7 54h27M40 52h16M48 44v16"/>',
-  qualifying: '<path d="M25 6h14M32 6v9M49 14l5 6M17 18l-6 6M32 17l17 7 7 16-7 15H15L8 40l7-16ZM32 25v16l11 6"/>',
-  race: '<path d="M12 58V10M12 12h38v30H12"/><path d="M14 14h11v9H14ZM36 14h11v9H36ZM25 23h11v9H25ZM14 32h11v8H14ZM36 32h11v8H36Z" fill="currentColor" stroke="none"/>',
-};
 function icon(id, className = 'session-icon') { return `<svg class="${className}" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="miter" aria-hidden="true">${iconPaths[id] || iconPaths.race}</svg>`; }
 function flag(r) { const type = ['MX', 'BR', 'US'].includes(r.flag) ? r.flag.toLowerCase() : 'generic'; return `<span class="flag flag-${type}" aria-label="${r.country}">${type === 'generic' ? r.flag : ''}</span>`; }
 function zoneLabel(iso) {
@@ -76,7 +71,7 @@ function renderRace(r) {
   const isNext = r.id === nextRace().id;
   const isPast = completed(r);
   const next = races.find(x => x.round > r.round);
-  const s = r.sessions.find(s => s.id === selectedSession) || r.sessions.at(-1);
+  const s = r.sessions.find(s => s.id === selectedSession) || defaultSession(r, demoNow());
   selectedSession = s.id;
   main.innerHTML = `
     <section class="race-hero" aria-labelledby="race-title">
@@ -104,6 +99,15 @@ function renderRace(r) {
 let timerMode = '';
 function renderTimer(force = false) {
   if (currentPage !== 'next' || !currentRace) return;
+  if (autoSelectSession && !force) {
+    const nextWeekend = followNextWeekend ? nextRace() : currentRace;
+    const session = defaultSession(nextWeekend, demoNow());
+    if (nextWeekend.id !== currentRace.id || session.id !== selectedSession) {
+      selectedSession = session.id;
+      renderRace(nextWeekend);
+      return;
+    }
+  }
   refreshSessionCards();
   const s = currentRace.sessions.find(s => s.id === selectedSession);
   const state = sessionStatus(s);
@@ -140,7 +144,13 @@ function updateNav() { document.querySelectorAll('[data-nav]').forEach(el => { c
 function route() {
   const [page, id] = location.hash.slice(1).split('/');
   if (page === 'calendar') renderCalendar(['upcoming', 'past', 'all'].includes(id) ? id : 'upcoming');
-  else { selectedSession = 'race'; renderRace(page === 'race' ? races.find(r => r.id === id) || nextRace() : nextRace()); }
+  else {
+    followNextWeekend = page !== 'race';
+    autoSelectSession = true;
+    const race = page === 'race' ? races.find(r => r.id === id) || nextRace() : nextRace();
+    selectedSession = defaultSession(race, demoNow()).id;
+    renderRace(race);
+  }
   if (pendingFocus) {
     document.querySelector(pendingFocus)?.focus({ preventScroll: true });
     pendingFocus = null;
@@ -158,6 +168,7 @@ document.addEventListener('click', event => {
     navigate(`#calendar/${button.dataset.filter}`);
   }
   if (button.dataset.session) {
+    autoSelectSession = false;
     selectedSession = button.dataset.session;
     renderRace(currentRace);
     document.querySelector(`[data-session="${selectedSession}"]`).focus({ preventScroll: true });
