@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ecebe5">
+  <meta name="description" content="Every session. Every second. A minimal Formula One countdown and season calendar. Design preview with sample data.">
+  <title>Lights Out — Every second counts.</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#next" aria-label="Lights Out home"><svg viewBox="0 0 60 36" aria-hidden="true"><path d="M2 29 24 7h18L20 29Zm26 0L50 7h8L36 29Z" fill="currentColor"/></svg><span>LIGHTS OUT<span class="brand-dot">®</span></span></a>
+    <nav aria-label="Main navigation"><button data-nav="next" class="nav-button active">Next race<span class="nav-dot"></span></button><button data-nav="calendar" class="nav-button">The calendar<span class="nav-arrow">↗</span></button></nav>
+    <div class="header-season"><span class="status-dot"></span>2026 SEASON</div>
+  </header>
+  <main id="main"></main>
+  <footer><div><span class="footer-symbol">↗</span> EVERY SESSION. EVERY SECOND.</div><p>Independent Formula One fan project.</p><span class="demo-note"><i></i> DESIGN PREVIEW · SAMPLE DATA</span></footer>
+  <div id="toast" role="status" class="toast"></div>
+</body>
+</html>
