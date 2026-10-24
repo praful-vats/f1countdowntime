@@ -9,6 +9,6 @@ export const iconPaths = {
   fp3: practice,
   qualifying: stopwatch,
   sq: `<path d="M3 29h9M3 38h9M6 47h6"/><g transform="translate(7 4) scale(.88)">${stopwatch}</g>`,
-  sprint: `<path d="M3 26h8M3 37h8M6 48h5"/><g transform="translate(6 0)">${race}</g>`,
+  sprint: '<path d="M5 18h54v24H5ZM13 42v12M51 42v12M8 54h10M46 54h10"/><g fill="currentColor" stroke="none"><circle cx="12" cy="30" r="3.2"/><circle cx="22" cy="30" r="3.2"/><circle cx="32" cy="30" r="3.2"/><circle cx="42" cy="30" r="3.2"/><circle cx="52" cy="30" r="3.2"/></g>',
   race,
 };

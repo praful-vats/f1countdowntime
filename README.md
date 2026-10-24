@@ -9,7 +9,7 @@ Run `node server.mjs` in this directory, then open http://127.0.0.1:4173.
 ## Included
 
 - Next session countdown, ticking against an illustrative clock. Active sessions take priority; otherwise the earliest upcoming session is selected. The default view advances as sessions finish, while manually selected sessions stay selected.
-- Shared open-wheel car icon for practice, timed-lap stopwatches for qualifying, and chequered flags for racing. Sprint icons include speed strokes.
+- Shared open-wheel car icon for practice, timed-lap stopwatches for qualifying, a starting-light gantry for Sprint, and a chequered flag for Race. Sprint qualifying adds speed strokes to its stopwatch.
 - Session selection for FP1, FP2, FP3, qualifying and race.
 - Sprint weekends with sprint qualifying and sprint in place of FP2/FP3.
 - Upcoming, past and full-season calendars.
