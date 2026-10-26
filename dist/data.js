@@ -1,222 +1,1484 @@
-/**
- * Design-prototype fixtures. All dates, results and circuit statistics are
- * illustrative sample data, not an official Formula 1 calendar.
- * Replace this module with normalized provider data when connecting a live API.
- */
-export const DEMO_NOW = '2026-10-24T10:00:00Z';
+// Verified schedule and unmodified circuit outlines from Formula1.com.
+// Regenerate with: node scripts/sync-official.mjs
+export const scheduleMeta = {
+  "season": 2026,
+  "checkedAt": "2026-10-26T10:43:49.714Z",
+  "sourceUrl": "https://www.formula1.com/en/racing/2026",
+  "totalRounds": 23,
+  "updateMode": "verified-snapshot"
+};
 
-const DAY = 24 * 60 * 60 * 1000;
-
-function sessionStart(raceDate, daysBefore, hour, minute = 0) {
-  const date = new Date(new Date(raceDate).getTime() - daysBefore * DAY);
-  date.setUTCHours(hour, minute, 0, 0);
-  return date.toISOString();
-}
-
-function session(id, name, start, durationMinutes) {
-  return {
-    id,
-    name,
-    start,
-    end: new Date(new Date(start).getTime() + durationMinutes * 60000).toISOString(),
-  };
-}
-
-function weekend(raceDate, isSprint) {
-  const friday = (hour, minute = 0) => sessionStart(raceDate, 2, hour, minute);
-  const saturday = (hour, minute = 0) => sessionStart(raceDate, 1, hour, minute);
-  if (isSprint) {
-    return [
-      session('fp1', 'Practice 1', friday(15, 30), 60),
-      session('sq', 'Sprint qualifying', friday(19, 30), 44),
-      session('sprint', 'Sprint', saturday(15), 60),
-      session('qualifying', 'Qualifying', saturday(19), 60),
-      session('race', 'Race', raceDate, 120),
-    ];
+export const races = [
+  {
+    "id": "australia",
+    "round": 1,
+    "title": "Australian",
+    "officialName": "FORMULA 1 QATAR AIRWAYS AUSTRALIAN GRAND PRIX 2026",
+    "country": "Australia",
+    "location": "Melbourne",
+    "circuit": "Albert Park Grand Prix Circuit",
+    "flag": "AU",
+    "date": "2026-03-08T04:00:00.000Z",
+    "dateStart": "2026-03-06",
+    "dateEnd": "2026-03-08",
+    "timezone": "Australia/Melbourne",
+    "sprint": false,
+    "lengthKm": "5.278",
+    "laps": 58,
+    "distanceKm": "306.124",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-03-06T01:30:00.000Z",
+        "end": "2026-03-06T02:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11227
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-03-06T05:00:00.000Z",
+        "end": "2026-03-06T06:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11228
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-03-07T01:30:00.000Z",
+        "end": "2026-03-07T02:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11229
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-03-07T05:00:00.000Z",
+        "end": "2026-03-07T06:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11230
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-03-08T04:00:00.000Z",
+        "end": "2026-03-08T06:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11234
+      }
+    ],
+    "trackAsset": "./tracks/australia.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmelbourneblackoutline.svg",
+    "trackSha256": "935b2de528136cecbff4d9be2b8497afe072e46e466d445f55c11077671c2acd",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/australia"
+  },
+  {
+    "id": "china",
+    "round": 2,
+    "title": "Chinese",
+    "officialName": "FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2026",
+    "country": "China",
+    "location": "Shanghai",
+    "circuit": "Shanghai International Circuit",
+    "flag": "CN",
+    "date": "2026-03-15T07:00:00.000Z",
+    "dateStart": "2026-03-13",
+    "dateEnd": "2026-03-15",
+    "timezone": "Asia/Shanghai",
+    "sprint": true,
+    "lengthKm": "5.451",
+    "laps": 56,
+    "distanceKm": "305.066",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-03-13T03:30:00.000Z",
+        "end": "2026-03-13T04:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11235
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-03-13T07:30:00.000Z",
+        "end": "2026-03-13T08:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11236
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-03-14T03:00:00.000Z",
+        "end": "2026-03-14T04:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11240
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-03-14T07:00:00.000Z",
+        "end": "2026-03-14T08:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11241
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-03-15T07:00:00.000Z",
+        "end": "2026-03-15T09:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11245
+      }
+    ],
+    "trackAsset": "./tracks/china.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackshanghaiblackoutline.svg",
+    "trackSha256": "ac11f73a5499cb566457a7d46c668af40aa9b6c7c72e5728b04d9e7dcfbefaee",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/china"
+  },
+  {
+    "id": "japan",
+    "round": 3,
+    "title": "Japanese",
+    "officialName": "FORMULA 1 ARAMCO JAPANESE GRAND PRIX 2026",
+    "country": "Japan",
+    "location": "Suzuka",
+    "circuit": "Suzuka Circuit",
+    "flag": "JP",
+    "date": "2026-03-29T05:00:00.000Z",
+    "dateStart": "2026-03-27",
+    "dateEnd": "2026-03-29",
+    "timezone": "Asia/Tokyo",
+    "sprint": false,
+    "lengthKm": "5.807",
+    "laps": 53,
+    "distanceKm": "307.471",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-03-27T02:30:00.000Z",
+        "end": "2026-03-27T03:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11246
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-03-27T06:00:00.000Z",
+        "end": "2026-03-27T07:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11247
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-03-28T02:30:00.000Z",
+        "end": "2026-03-28T03:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11248
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-03-28T06:00:00.000Z",
+        "end": "2026-03-28T07:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11249
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-03-29T05:00:00.000Z",
+        "end": "2026-03-29T07:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11253
+      }
+    ],
+    "trackAsset": "./tracks/japan.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksuzukablackoutline.svg",
+    "trackSha256": "cf699d42f3098789de46c7c7d42545b62d00f5422f90114c0e2a275ee28a6021",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/japan"
+  },
+  {
+    "id": "miami",
+    "round": 4,
+    "title": "Miami",
+    "officialName": "FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2026",
+    "country": "United States",
+    "location": "Miami Gardens",
+    "circuit": "Miami International Autodrome",
+    "flag": "US",
+    "date": "2026-05-03T17:00:00.000Z",
+    "dateStart": "2026-05-01",
+    "dateEnd": "2026-05-03",
+    "timezone": "America/New_York",
+    "sprint": true,
+    "lengthKm": "5.412",
+    "laps": 57,
+    "distanceKm": "308.326",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-05-01T16:00:00.000Z",
+        "end": "2026-05-01T17:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11270
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-05-01T20:30:00.000Z",
+        "end": "2026-05-01T21:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11271
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-05-02T16:00:00.000Z",
+        "end": "2026-05-02T17:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11275
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-05-02T20:00:00.000Z",
+        "end": "2026-05-02T21:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11276
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-05-03T17:00:00.000Z",
+        "end": "2026-05-03T19:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11280
+      }
+    ],
+    "trackAsset": "./tracks/miami.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmiamiblackoutline.svg",
+    "trackSha256": "6b036f75f5b86b6ce17bb1e3d58b6cac8e150042a456c67bb8582202449cd8dd",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/miami"
+  },
+  {
+    "id": "canada",
+    "round": 5,
+    "title": "Canadian",
+    "officialName": "FORMULA 1 LENOVO GRAND PRIX DU CANADA 2026",
+    "country": "Canada",
+    "location": "Montréal",
+    "circuit": "Circuit Gilles-Villeneuve",
+    "flag": "CA",
+    "date": "2026-05-24T20:00:00.000Z",
+    "dateStart": "2026-05-22",
+    "dateEnd": "2026-05-24",
+    "timezone": "America/Toronto",
+    "sprint": true,
+    "lengthKm": "4.361",
+    "laps": 70,
+    "distanceKm": "305.27",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-05-22T16:30:00.000Z",
+        "end": "2026-05-22T17:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11281
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-05-22T20:30:00.000Z",
+        "end": "2026-05-22T21:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11282
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-05-23T16:00:00.000Z",
+        "end": "2026-05-23T17:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11286
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-05-23T20:00:00.000Z",
+        "end": "2026-05-23T21:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11287
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-05-24T20:00:00.000Z",
+        "end": "2026-05-24T22:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11291
+      }
+    ],
+    "trackAsset": "./tracks/canada.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmontrealblackoutline.svg",
+    "trackSha256": "8900134804e43687bd988b8e82828039cf2ba08af92e49212a1c185b5b185992",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/canada"
+  },
+  {
+    "id": "monaco",
+    "round": 6,
+    "title": "Monaco",
+    "officialName": "FORMULA 1 LOUIS VUITTON GRAND PRIX DE MONACO 2026",
+    "country": "Monaco",
+    "location": "Monte Carlo",
+    "circuit": "Circuit de Monaco",
+    "flag": "MC",
+    "date": "2026-06-07T13:00:00.000Z",
+    "dateStart": "2026-06-05",
+    "dateEnd": "2026-06-07",
+    "timezone": "Europe/Monaco",
+    "sprint": false,
+    "lengthKm": "3.337",
+    "laps": 78,
+    "distanceKm": "260.286",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-06-05T11:30:00.000Z",
+        "end": "2026-06-05T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11292
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-06-05T15:00:00.000Z",
+        "end": "2026-06-05T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11293
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-06-06T10:30:00.000Z",
+        "end": "2026-06-06T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11294
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-06-06T14:00:00.000Z",
+        "end": "2026-06-06T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11295
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-06-07T13:00:00.000Z",
+        "end": "2026-06-07T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11299
+      }
+    ],
+    "trackAsset": "./tracks/monaco.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmontecarloblackoutline.svg",
+    "trackSha256": "7a4ef43759ab12f53fb9f4c18ab2f7625dcd0213cba9f0c3bf0a0ff0f457721a",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/monaco"
+  },
+  {
+    "id": "barcelona",
+    "round": 7,
+    "title": "Barcelona",
+    "officialName": "FORMULA 1 MSC CRUISES GRAN PREMIO DE BARCELONA-CATALUNYA 2026",
+    "country": "Spain",
+    "location": "Barcelona",
+    "circuit": "Circuit de Barcelona-Catalunya",
+    "flag": "ES",
+    "date": "2026-06-14T13:00:00.000Z",
+    "dateStart": "2026-06-12",
+    "dateEnd": "2026-06-14",
+    "timezone": "Europe/Madrid",
+    "sprint": false,
+    "lengthKm": "4.657",
+    "laps": 66,
+    "distanceKm": "307.236",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-06-12T11:30:00.000Z",
+        "end": "2026-06-12T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11300
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-06-12T15:00:00.000Z",
+        "end": "2026-06-12T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11301
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-06-13T10:30:00.000Z",
+        "end": "2026-06-13T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11302
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-06-13T14:00:00.000Z",
+        "end": "2026-06-13T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11303
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-06-14T13:00:00.000Z",
+        "end": "2026-06-14T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11307
+      }
+    ],
+    "trackAsset": "./tracks/barcelona.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackcatalunyablackoutline.svg",
+    "trackSha256": "b00b9950d493281f13ea72489aafba136c94acd86dd8c8d018043be751e4d10a",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/barcelona-catalunya"
+  },
+  {
+    "id": "austria",
+    "round": 8,
+    "title": "Austrian",
+    "officialName": "FORMULA 1 LENOVO AUSTRIAN GRAND PRIX 2026",
+    "country": "Austria",
+    "location": "Spielberg",
+    "circuit": "Red Bull Ring",
+    "flag": "AT",
+    "date": "2026-06-28T13:00:00.000Z",
+    "dateStart": "2026-06-26",
+    "dateEnd": "2026-06-28",
+    "timezone": "Europe/Vienna",
+    "sprint": false,
+    "lengthKm": "4.326",
+    "laps": 71,
+    "distanceKm": "307.026",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-06-26T11:30:00.000Z",
+        "end": "2026-06-26T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11308
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-06-26T15:00:00.000Z",
+        "end": "2026-06-26T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11309
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-06-27T10:30:00.000Z",
+        "end": "2026-06-27T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11310
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-06-27T14:00:00.000Z",
+        "end": "2026-06-27T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11311
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-06-28T13:00:00.000Z",
+        "end": "2026-06-28T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11315
+      }
+    ],
+    "trackAsset": "./tracks/austria.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackspielbergblackoutline.svg",
+    "trackSha256": "85602e828cd255e2118bfa7d90a508c9a549c352febe4c3795d33142a354c8e7",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/austria"
+  },
+  {
+    "id": "britain",
+    "round": 9,
+    "title": "British",
+    "officialName": "FORMULA 1 PIRELLI BRITISH GRAND PRIX 2026",
+    "country": "United Kingdom",
+    "location": "Silverstone",
+    "circuit": "Silverstone Circuit",
+    "flag": "GB",
+    "date": "2026-07-05T14:00:00.000Z",
+    "dateStart": "2026-07-03",
+    "dateEnd": "2026-07-05",
+    "timezone": "Europe/London",
+    "sprint": true,
+    "lengthKm": "5.891",
+    "laps": 52,
+    "distanceKm": "306.198",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-07-03T11:30:00.000Z",
+        "end": "2026-07-03T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11316
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-07-03T15:30:00.000Z",
+        "end": "2026-07-03T16:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11317
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-07-04T11:00:00.000Z",
+        "end": "2026-07-04T12:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11321
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-07-04T15:00:00.000Z",
+        "end": "2026-07-04T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11322
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-07-05T14:00:00.000Z",
+        "end": "2026-07-05T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11326
+      }
+    ],
+    "trackAsset": "./tracks/britain.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksilverstoneblackoutline.svg",
+    "trackSha256": "946f5de282ee0925cbcd5d02fcf3781d58d9ed34cba1eee6bfc4ce86652f3d57",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/great-britain"
+  },
+  {
+    "id": "belgium",
+    "round": 10,
+    "title": "Belgian",
+    "officialName": "FORMULA 1 MOËT & CHANDON BELGIAN GRAND PRIX 2026",
+    "country": "Belgium",
+    "location": "Spa-Francorchamps",
+    "circuit": "Circuit de Spa-Francorchamps",
+    "flag": "BE",
+    "date": "2026-07-19T13:00:00.000Z",
+    "dateStart": "2026-07-17",
+    "dateEnd": "2026-07-19",
+    "timezone": "Europe/Brussels",
+    "sprint": false,
+    "lengthKm": "7.004",
+    "laps": 44,
+    "distanceKm": "308.054",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-07-17T11:30:00.000Z",
+        "end": "2026-07-17T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11327
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-07-17T15:00:00.000Z",
+        "end": "2026-07-17T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11328
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-07-18T10:30:00.000Z",
+        "end": "2026-07-18T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11329
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-07-18T14:00:00.000Z",
+        "end": "2026-07-18T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11330
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-07-19T13:00:00.000Z",
+        "end": "2026-07-19T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11334
+      }
+    ],
+    "trackAsset": "./tracks/belgium.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackspafrancorchampsblackoutline.svg",
+    "trackSha256": "b86fa2b406fbdc54d68e59800e75b9fead332570079a5e69a71b311978266b91",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/belgium"
+  },
+  {
+    "id": "hungary",
+    "round": 11,
+    "title": "Hungarian",
+    "officialName": "FORMULA 1 AWS HUNGARIAN GRAND PRIX 2026",
+    "country": "Hungary",
+    "location": "Budapest",
+    "circuit": "Hungaroring",
+    "flag": "HU",
+    "date": "2026-07-26T13:00:00.000Z",
+    "dateStart": "2026-07-24",
+    "dateEnd": "2026-07-26",
+    "timezone": "Europe/Budapest",
+    "sprint": false,
+    "lengthKm": "4.381",
+    "laps": 70,
+    "distanceKm": "306.63",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-07-24T11:30:00.000Z",
+        "end": "2026-07-24T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11335
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-07-24T15:00:00.000Z",
+        "end": "2026-07-24T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11336
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-07-25T10:30:00.000Z",
+        "end": "2026-07-25T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11337
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-07-25T14:00:00.000Z",
+        "end": "2026-07-25T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11338
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-07-26T13:00:00.000Z",
+        "end": "2026-07-26T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11342
+      }
+    ],
+    "trackAsset": "./tracks/hungary.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackhungaroringblackoutline.svg",
+    "trackSha256": "d2b8d27d221ed4a961cc6490db38769f32fc55e9b847a21c9c89ac152681247a",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/hungary"
+  },
+  {
+    "id": "netherlands",
+    "round": 12,
+    "title": "Dutch",
+    "officialName": "FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2026",
+    "country": "Netherlands",
+    "location": "Zandvoort",
+    "circuit": "Circuit Zandvoort",
+    "flag": "NL",
+    "date": "2026-08-23T13:00:00.000Z",
+    "dateStart": "2026-08-21",
+    "dateEnd": "2026-08-23",
+    "timezone": "Europe/Amsterdam",
+    "sprint": true,
+    "lengthKm": "4.259",
+    "laps": 72,
+    "distanceKm": "306.592",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-08-21T10:30:00.000Z",
+        "end": "2026-08-21T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11343
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-08-21T14:30:00.000Z",
+        "end": "2026-08-21T15:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11344
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-08-22T10:00:00.000Z",
+        "end": "2026-08-22T11:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11348
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-08-22T14:00:00.000Z",
+        "end": "2026-08-22T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11349
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-08-23T13:00:00.000Z",
+        "end": "2026-08-23T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11353
+      }
+    ],
+    "trackAsset": "./tracks/netherlands.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackzandvoortblackoutline.svg",
+    "trackSha256": "7548d1f627a39679733fb55e93fb8a77896292619f410c2b784c3211bccc0669",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/netherlands"
+  },
+  {
+    "id": "italy",
+    "round": 13,
+    "title": "Italian",
+    "officialName": "FORMULA 1 PIRELLI GRAN PREMIO D’ITALIA 2026",
+    "country": "Italy",
+    "location": "Monza",
+    "circuit": "Autodromo Nazionale Monza",
+    "flag": "IT",
+    "date": "2026-09-06T13:00:00.000Z",
+    "dateStart": "2026-09-04",
+    "dateEnd": "2026-09-06",
+    "timezone": "Europe/Rome",
+    "sprint": false,
+    "lengthKm": "5.793",
+    "laps": 53,
+    "distanceKm": "306.72",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-09-04T10:30:00.000Z",
+        "end": "2026-09-04T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11354
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-09-04T14:00:00.000Z",
+        "end": "2026-09-04T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11355
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-09-05T10:30:00.000Z",
+        "end": "2026-09-05T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11356
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-09-05T14:00:00.000Z",
+        "end": "2026-09-05T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11357
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-09-06T13:00:00.000Z",
+        "end": "2026-09-06T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11361
+      }
+    ],
+    "trackAsset": "./tracks/italy.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmonzablackoutline.svg",
+    "trackSha256": "25cebbfd50eb1301dbdb0e73a029a69f9d9b92c8565515d39e7a8174845979c9",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/italy"
+  },
+  {
+    "id": "madrid",
+    "round": 14,
+    "title": "Spanish",
+    "officialName": "FORMULA 1 TAG HEUER GRAN PREMIO DE ESPAÑA 2026",
+    "country": "Spain",
+    "location": "Madrid",
+    "circuit": "Madring",
+    "flag": "ES",
+    "date": "2026-09-13T13:00:00.000Z",
+    "dateStart": "2026-09-11",
+    "dateEnd": "2026-09-13",
+    "timezone": "Europe/Madrid",
+    "sprint": false,
+    "lengthKm": "5.414",
+    "laps": 57,
+    "distanceKm": "308.399",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-09-11T11:30:00.000Z",
+        "end": "2026-09-11T12:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11362
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-09-11T15:00:00.000Z",
+        "end": "2026-09-11T16:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11363
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-09-12T10:30:00.000Z",
+        "end": "2026-09-12T11:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11364
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-09-12T14:00:00.000Z",
+        "end": "2026-09-12T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11365
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-09-13T13:00:00.000Z",
+        "end": "2026-09-13T15:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11369
+      }
+    ],
+    "trackAsset": "./tracks/madrid.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmadringblackoutline.svg",
+    "trackSha256": "f4d1fe06b6199203cddcdc820cb314ab7aaa2399b8958bd8bbd69519d3f81877",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/spain"
+  },
+  {
+    "id": "azerbaijan",
+    "round": 15,
+    "title": "Azerbaijan",
+    "officialName": "FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2026",
+    "country": "Azerbaijan",
+    "location": "Baku",
+    "circuit": "Baku City Circuit",
+    "flag": "AZ",
+    "date": "2026-09-26T11:00:00.000Z",
+    "dateStart": "2026-09-24",
+    "dateEnd": "2026-09-26",
+    "timezone": "Asia/Baku",
+    "sprint": false,
+    "lengthKm": "6.003",
+    "laps": 51,
+    "distanceKm": "306.049",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-09-24T08:30:00.000Z",
+        "end": "2026-09-24T09:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11370
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-09-24T12:00:00.000Z",
+        "end": "2026-09-24T13:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11371
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-09-25T08:30:00.000Z",
+        "end": "2026-09-25T09:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11372
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-09-25T12:00:00.000Z",
+        "end": "2026-09-25T13:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11373
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-09-26T11:00:00.000Z",
+        "end": "2026-09-26T13:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11377
+      }
+    ],
+    "trackAsset": "./tracks/azerbaijan.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackbakublackoutline.svg",
+    "trackSha256": "26c7d39a89774dafe328eeb730fab1f0aad84ec679bfa5711a54158ef78a2a19",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/azerbaijan"
+  },
+  {
+    "id": "bahrain",
+    "round": 16,
+    "title": "Bahrain",
+    "officialName": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX IN MALAYSIA 2026",
+    "country": "Malaysia",
+    "location": "Kuala Lumpur",
+    "circuit": "Sepang International Circuit",
+    "flag": "MY",
+    "date": "2026-10-04T07:00:00.000Z",
+    "dateStart": "2026-10-02",
+    "dateEnd": "2026-10-04",
+    "timezone": "Asia/Kuala_Lumpur",
+    "sprint": false,
+    "lengthKm": "5.543",
+    "laps": 56,
+    "distanceKm": "310.417",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-10-02T04:30:00.000Z",
+        "end": "2026-10-02T05:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11727
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-10-02T08:00:00.000Z",
+        "end": "2026-10-02T09:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11728
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-10-03T04:30:00.000Z",
+        "end": "2026-10-03T05:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11729
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-10-03T08:00:00.000Z",
+        "end": "2026-10-03T09:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11730
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-10-04T07:00:00.000Z",
+        "end": "2026-10-04T09:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11731
+      }
+    ],
+    "trackAsset": "./tracks/bahrain.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackkualalumpurblackoutline.svg",
+    "trackSha256": "e4df6c74a5d19120e9f9865eb335f0687be8a4bfa28c9ea3e870632df1573619",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/bahrain"
+  },
+  {
+    "id": "singapore",
+    "round": 17,
+    "title": "Singapore",
+    "officialName": "FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2026",
+    "country": "Singapore",
+    "location": "Marina Bay",
+    "circuit": "Marina Bay Street Circuit",
+    "flag": "SG",
+    "date": "2026-10-11T12:00:00.000Z",
+    "dateStart": "2026-10-09",
+    "dateEnd": "2026-10-11",
+    "timezone": "Asia/Singapore",
+    "sprint": true,
+    "lengthKm": "4.927",
+    "laps": 62,
+    "distanceKm": "305.337",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-10-09T08:30:00.000Z",
+        "end": "2026-10-09T09:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11378
+      },
+      {
+        "id": "sq",
+        "name": "Sprint Qualifying",
+        "start": "2026-10-09T12:30:00.000Z",
+        "end": "2026-10-09T13:14:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11379
+      },
+      {
+        "id": "sprint",
+        "name": "Sprint",
+        "start": "2026-10-10T09:00:00.000Z",
+        "end": "2026-10-10T09:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11383
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-10-10T13:00:00.000Z",
+        "end": "2026-10-10T14:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11384
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-10-11T12:00:00.000Z",
+        "end": "2026-10-11T14:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11388
+      }
+    ],
+    "trackAsset": "./tracks/singapore.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksingaporeblackoutline.svg",
+    "trackSha256": "aa2ccd41ee4f01cf2d77e645d3499198585d7817483657b6930ccc6ace5996bc",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/singapore"
+  },
+  {
+    "id": "united-states",
+    "round": 18,
+    "title": "United States",
+    "officialName": "FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2026",
+    "country": "United States",
+    "location": "Austin",
+    "circuit": "Circuit of The Americas",
+    "flag": "US",
+    "date": "2026-10-25T20:00:00.000Z",
+    "dateStart": "2026-10-23",
+    "dateEnd": "2026-10-25",
+    "timezone": "US/Central",
+    "sprint": false,
+    "lengthKm": "5.513",
+    "laps": 56,
+    "distanceKm": "308.432",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-10-23T17:30:00.000Z",
+        "end": "2026-10-23T18:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11389
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-10-23T21:00:00.000Z",
+        "end": "2026-10-23T22:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11390
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-10-24T17:30:00.000Z",
+        "end": "2026-10-24T18:30:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11391
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-10-24T21:00:00.000Z",
+        "end": "2026-10-24T22:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11392
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-10-25T20:00:00.000Z",
+        "end": "2026-10-25T22:00:00.000Z",
+        "sourceState": "completed",
+        "sourceSessionId": 11396
+      }
+    ],
+    "trackAsset": "./tracks/united-states.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackaustinblackoutline.svg",
+    "trackSha256": "3c0a75372b3223daeb6dec1558e9b4c16bd4860872f78ab90e5b076d0ad536c2",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/united-states"
+  },
+  {
+    "id": "mexico-city",
+    "round": 19,
+    "title": "Mexico City",
+    "officialName": "FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2026",
+    "country": "Mexico",
+    "location": "Mexico City",
+    "circuit": "Autódromo Hermanos Rodríguez",
+    "flag": "MX",
+    "date": "2026-11-01T20:00:00.000Z",
+    "dateStart": "2026-10-30",
+    "dateEnd": "2026-11-01",
+    "timezone": "America/Mexico_City",
+    "sprint": false,
+    "lengthKm": "4.304",
+    "laps": 71,
+    "distanceKm": "305.354",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-10-30T18:30:00.000Z",
+        "end": "2026-10-30T19:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11397
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-10-30T22:00:00.000Z",
+        "end": "2026-10-30T23:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11398
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-10-31T17:30:00.000Z",
+        "end": "2026-10-31T18:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11399
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-10-31T21:00:00.000Z",
+        "end": "2026-10-31T22:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11400
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-11-01T20:00:00.000Z",
+        "end": "2026-11-01T22:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11404
+      }
+    ],
+    "trackAsset": "./tracks/mexico-city.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmexicocityblackoutline.svg",
+    "trackSha256": "05118c0e22e3d3ffdc061fd14c39da1f9e88ac741c688305757dbd49ce19ffe6",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/mexico"
+  },
+  {
+    "id": "sao-paulo",
+    "round": 20,
+    "title": "São Paulo",
+    "officialName": "FORMULA 1 MSC CRUISES GRANDE PRÊMIO DE SÃO PAULO 2026",
+    "country": "Brazil",
+    "location": "São Paulo",
+    "circuit": "Autódromo José Carlos Pace",
+    "flag": "BR",
+    "date": "2026-11-08T17:00:00.000Z",
+    "dateStart": "2026-11-06",
+    "dateEnd": "2026-11-08",
+    "timezone": "America/Sao_Paulo",
+    "sprint": false,
+    "lengthKm": "4.309",
+    "laps": 71,
+    "distanceKm": "305.879",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-11-06T15:30:00.000Z",
+        "end": "2026-11-06T16:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11405
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-11-06T19:00:00.000Z",
+        "end": "2026-11-06T20:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11406
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-11-07T14:30:00.000Z",
+        "end": "2026-11-07T15:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11407
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-11-07T18:00:00.000Z",
+        "end": "2026-11-07T19:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11408
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-11-08T17:00:00.000Z",
+        "end": "2026-11-08T19:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11412
+      }
+    ],
+    "trackAsset": "./tracks/sao-paulo.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackinterlagosblackoutline.svg",
+    "trackSha256": "e6c595ee86c375a69dd204c8ac32eca036bb4f65a376bef866e42ce132b85ffa",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/brazil"
+  },
+  {
+    "id": "las-vegas",
+    "round": 21,
+    "title": "Las Vegas",
+    "officialName": "FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026",
+    "country": "United States",
+    "location": "Las Vegas",
+    "circuit": "Las Vegas Strip Circuit",
+    "flag": "US",
+    "date": "2026-11-22T04:00:00.000Z",
+    "dateStart": "2026-11-19",
+    "dateEnd": "2026-11-21",
+    "timezone": "America/Los_Angeles",
+    "sprint": false,
+    "lengthKm": "6.201",
+    "laps": 50,
+    "distanceKm": "309.958",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-11-20T00:30:00.000Z",
+        "end": "2026-11-20T01:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11413
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-11-20T04:00:00.000Z",
+        "end": "2026-11-20T05:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11414
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-11-21T00:30:00.000Z",
+        "end": "2026-11-21T01:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11415
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-11-21T04:00:00.000Z",
+        "end": "2026-11-21T05:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11416
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-11-22T04:00:00.000Z",
+        "end": "2026-11-22T06:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11420
+      }
+    ],
+    "trackAsset": "./tracks/las-vegas.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracklasvegasblackoutline.svg",
+    "trackSha256": "3fbba3ec0c219505937cea480c2803188e396f0a17f4b6661404925b8c10ccea",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/las-vegas"
+  },
+  {
+    "id": "qatar",
+    "round": 22,
+    "title": "Qatar",
+    "officialName": "FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2026",
+    "country": "Qatar",
+    "location": "Lusail",
+    "circuit": "Lusail International Circuit",
+    "flag": "QA",
+    "date": "2026-11-29T16:00:00.000Z",
+    "dateStart": "2026-11-27",
+    "dateEnd": "2026-11-29",
+    "timezone": "Asia/Qatar",
+    "sprint": false,
+    "lengthKm": "5.419",
+    "laps": 57,
+    "distanceKm": "308.611",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-11-27T13:30:00.000Z",
+        "end": "2026-11-27T14:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11421
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-11-27T17:00:00.000Z",
+        "end": "2026-11-27T18:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11422
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-11-28T14:30:00.000Z",
+        "end": "2026-11-28T15:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11423
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-11-28T18:00:00.000Z",
+        "end": "2026-11-28T19:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11424
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-11-29T16:00:00.000Z",
+        "end": "2026-11-29T18:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11428
+      }
+    ],
+    "trackAsset": "./tracks/qatar.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracklusailblackoutline.svg",
+    "trackSha256": "d0221d3ed8d82f5f8c2ea1b36480297dc2854491fff9f797b33641b1e1e4cc9e",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/qatar"
+  },
+  {
+    "id": "abu-dhabi",
+    "round": 23,
+    "title": "Abu Dhabi",
+    "officialName": "FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2026",
+    "country": "United Arab Emirates",
+    "location": "Yas Marina",
+    "circuit": "Yas Marina Circuit",
+    "flag": "AE",
+    "date": "2026-12-06T13:00:00.000Z",
+    "dateStart": "2026-12-04",
+    "dateEnd": "2026-12-06",
+    "timezone": "Asia/Dubai",
+    "sprint": false,
+    "lengthKm": "5.281",
+    "laps": 58,
+    "distanceKm": "306.188",
+    "sessions": [
+      {
+        "id": "fp1",
+        "name": "Practice 1",
+        "start": "2026-12-04T09:30:00.000Z",
+        "end": "2026-12-04T10:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11429
+      },
+      {
+        "id": "fp2",
+        "name": "Practice 2",
+        "start": "2026-12-04T13:00:00.000Z",
+        "end": "2026-12-04T14:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11430
+      },
+      {
+        "id": "fp3",
+        "name": "Practice 3",
+        "start": "2026-12-05T10:30:00.000Z",
+        "end": "2026-12-05T11:30:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11431
+      },
+      {
+        "id": "qualifying",
+        "name": "Qualifying",
+        "start": "2026-12-05T14:00:00.000Z",
+        "end": "2026-12-05T15:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11432
+      },
+      {
+        "id": "race",
+        "name": "Race",
+        "start": "2026-12-06T13:00:00.000Z",
+        "end": "2026-12-06T15:00:00.000Z",
+        "sourceState": "upcoming",
+        "sourceSessionId": 11436
+      }
+    ],
+    "trackAsset": "./tracks/abu-dhabi.svg",
+    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackyasmarinacircuitblackoutline.svg",
+    "trackSha256": "52480a45a6d02e8375f79ce035dca8280d11daf89c20b14961cdc86c358a3af1",
+    "sourceUrl": "https://www.formula1.com/en/racing/2026/united-arab-emirates"
   }
-  return [
-    session('fp1', 'Practice 1', friday(15, 30), 60),
-    session('fp2', 'Practice 2', friday(19), 60),
-    session('fp3', 'Practice 3', saturday(16, 30), 60),
-    session('qualifying', 'Qualifying', saturday(20), 60),
-    session('race', 'Race', raceDate, 120),
-  ];
-}
-
-// Stylized track drawings share a 500 × 280 viewBox. These are original
-// geometric illustrations for the prototype, not exact circuit maps.
-const fixtures = [
-  {
-    id: 'australia', round: 1, country: 'Australia', title: 'Australian',
-    circuit: 'Albert Park Grand Prix Circuit', flag: 'AU',
-    date: '2026-03-08T04:00:00Z', sprint: false,
-    lengthKm: '5.278', laps: 58, distanceKm: '306.124', winner: 'L. Norris',
-    trackPath: 'M85 180 L125 80 Q150 45 190 70 L230 103 L300 55 Q330 40 350 75 L405 155 Q420 185 390 200 L320 205 L280 230 L220 210 L155 225 L110 200 Z',
-  },
-  {
-    id: 'china', round: 2, country: 'China', title: 'Chinese',
-    circuit: 'Shanghai International Circuit', flag: 'CN',
-    date: '2026-03-15T07:00:00Z', sprint: true,
-    lengthKm: '5.451', laps: 56, distanceKm: '305.066', winner: 'O. Piastri',
-    trackPath: 'M85 205 L370 205 Q405 205 410 170 L410 100 Q405 70 370 75 L340 95 L325 130 L280 145 L240 130 Q205 110 220 80 Q240 50 270 75 Q290 105 255 110 L160 115 L125 150 L95 155 Z',
-  },
-  {
-    id: 'japan', round: 3, country: 'Japan', title: 'Japanese',
-    circuit: 'Suzuka International Racing Course', flag: 'JP',
-    date: '2026-03-29T05:00:00Z', sprint: false,
-    lengthKm: '5.807', laps: 53, distanceKm: '307.471', winner: 'M. Verstappen',
-    trackPath: 'M65 195 L140 190 L185 155 L225 175 L265 130 L305 150 L330 105 L380 80 Q430 65 430 110 L420 170 L360 200 L300 180 L265 135 L220 110 L185 125 L145 90 L95 100 L65 140 Z',
-  },
-  {
-    id: 'bahrain', round: 4, country: 'Bahrain', title: 'Bahrain',
-    circuit: 'Bahrain International Circuit', flag: 'BH',
-    date: '2026-04-12T15:00:00Z', sprint: false,
-    lengthKm: '5.412', laps: 57, distanceKm: '308.238', winner: 'G. Russell',
-    trackPath: 'M80 215 L385 215 L415 175 L380 145 L345 165 L310 130 L345 95 L315 65 L250 75 L230 115 L185 100 L165 145 L110 140 L80 180 Z',
-  },
-  {
-    id: 'saudi-arabia', round: 5, country: 'Saudi Arabia', title: 'Saudi Arabian',
-    circuit: 'Jeddah Corniche Circuit', flag: 'SA',
-    date: '2026-04-19T17:00:00Z', sprint: false,
-    lengthKm: '6.174', laps: 50, distanceKm: '308.450', winner: 'C. Leclerc',
-    trackPath: 'M70 210 L110 165 L145 170 L180 130 L210 145 L245 105 L280 120 L315 75 L370 55 Q400 45 415 70 L425 100 L380 125 L350 150 L310 155 L280 185 L240 175 L200 205 L155 195 L115 225 Z',
-  },
-  {
-    id: 'miami', round: 6, country: 'United States', title: 'Miami',
-    circuit: 'Miami International Autodrome', flag: 'US',
-    date: '2026-05-03T20:00:00Z', sprint: true,
-    lengthKm: '5.412', laps: 57, distanceKm: '308.326', winner: 'L. Norris',
-    trackPath: 'M60 180 L90 140 L125 145 L145 110 L195 130 L215 95 L265 115 L285 90 L335 110 L390 75 L430 110 L400 145 L350 150 L325 175 L290 165 L265 200 L210 190 L170 210 L130 190 L90 215 Z',
-  },
-  {
-    id: 'canada', round: 7, country: 'Canada', title: 'Canadian',
-    circuit: 'Circuit Gilles-Villeneuve', flag: 'CA',
-    date: '2026-05-24T18:00:00Z', sprint: true,
-    lengthKm: '4.361', laps: 70, distanceKm: '305.270', winner: 'O. Piastri',
-    trackPath: 'M70 205 L125 175 L160 185 L200 145 L240 155 L275 115 L315 120 L380 70 Q410 55 425 85 Q435 110 400 135 L350 155 L330 185 L290 175 L250 205 L200 195 L160 225 L115 210 L85 230 Z',
-  },
-  {
-    id: 'monaco', round: 8, country: 'Monaco', title: 'Monaco',
-    circuit: 'Circuit de Monaco', flag: 'MC',
-    date: '2026-06-07T13:00:00Z', sprint: false,
-    lengthKm: '3.337', laps: 78, distanceKm: '260.286', winner: 'C. Leclerc',
-    trackPath: 'M90 210 L150 205 L185 170 L210 180 L230 150 L260 160 L280 130 L335 140 L395 100 L420 60 L385 50 L350 90 L315 80 L280 105 L245 90 L210 120 L180 110 L145 145 L115 150 L95 180 Z',
-  },
-  {
-    id: 'barcelona', round: 9, country: 'Spain', title: 'Barcelona-Catalunya',
-    circuit: 'Circuit de Barcelona-Catalunya', flag: 'ES',
-    date: '2026-06-14T13:00:00Z', sprint: false,
-    lengthKm: '4.657', laps: 66, distanceKm: '307.236', winner: 'M. Verstappen',
-    trackPath: 'M80 210 L385 210 Q425 205 415 175 L375 140 L345 150 L320 115 L350 85 Q360 55 325 50 L275 70 L250 115 L215 105 L185 145 L145 130 L120 160 L85 165 Z',
-  },
-  {
-    id: 'austria', round: 10, country: 'Austria', title: 'Austrian',
-    circuit: 'Red Bull Ring', flag: 'AT',
-    date: '2026-06-28T13:00:00Z', sprint: false,
-    lengthKm: '4.318', laps: 71, distanceKm: '306.452', winner: 'L. Norris',
-    trackPath: 'M85 220 L415 220 L405 175 L350 155 L385 65 L345 45 L290 75 L250 110 L220 105 L185 145 L145 140 L110 180 Z',
-  },
-  {
-    id: 'britain', round: 11, country: 'United Kingdom', title: 'British',
-    circuit: 'Silverstone Circuit', flag: 'GB',
-    date: '2026-07-05T14:00:00Z', sprint: false,
-    lengthKm: '5.891', laps: 52, distanceKm: '306.198', winner: 'L. Hamilton',
-    trackPath: 'M75 180 L125 125 L105 90 L150 55 L215 80 L250 55 L280 90 L325 75 L345 110 L390 100 L430 140 L380 185 L335 175 L310 215 L260 190 L220 225 L180 205 L145 225 L110 195 Z',
-  },
-  {
-    id: 'belgium', round: 12, country: 'Belgium', title: 'Belgian',
-    circuit: 'Circuit de Spa-Francorchamps', flag: 'BE',
-    date: '2026-07-19T13:00:00Z', sprint: false,
-    lengthKm: '7.004', laps: 44, distanceKm: '308.052', winner: 'M. Verstappen',
-    trackPath: 'M60 210 L155 205 L175 175 L210 185 L250 135 L285 120 L330 65 L380 55 L425 95 L395 125 L355 130 L330 160 L285 175 L260 210 L215 200 L185 235 L145 225 L100 240 Z',
-  },
-  {
-    id: 'hungary', round: 13, country: 'Hungary', title: 'Hungarian',
-    circuit: 'Hungaroring', flag: 'HU',
-    date: '2026-07-26T13:00:00Z', sprint: false,
-    lengthKm: '4.381', laps: 70, distanceKm: '306.630', winner: 'O. Piastri',
-    trackPath: 'M75 215 L390 215 Q425 210 415 175 L380 155 L350 180 L315 160 L330 120 L300 90 L265 105 L245 65 L210 70 L190 110 L150 95 L115 125 L130 165 L90 170 Z',
-  },
-  {
-    id: 'netherlands', round: 14, country: 'Netherlands', title: 'Dutch',
-    circuit: 'Circuit Zandvoort', flag: 'NL',
-    date: '2026-08-23T13:00:00Z', sprint: true,
-    lengthKm: '4.259', laps: 72, distanceKm: '306.587', winner: 'M. Verstappen',
-    trackPath: 'M80 205 L360 205 Q420 200 410 155 L385 125 L345 140 L315 110 L330 80 L295 55 L255 90 L220 75 L200 115 L165 100 L140 130 L115 115 L85 145 L110 175 Z',
-  },
-  {
-    id: 'italy', round: 15, country: 'Italy', title: 'Italian',
-    circuit: 'Autodromo Nazionale Monza', flag: 'IT',
-    date: '2026-09-06T13:00:00Z', sprint: false,
-    lengthKm: '5.793', laps: 53, distanceKm: '306.720', winner: 'C. Leclerc',
-    trackPath: 'M90 215 L345 215 Q410 215 425 170 Q440 125 385 105 L340 95 L310 65 L270 80 L240 65 L205 100 L160 105 L135 140 L100 145 L110 175 Z',
-  },
-  {
-    id: 'madrid', round: 16, country: 'Spain', title: 'Spanish',
-    circuit: 'Madring', flag: 'ES',
-    date: '2026-09-13T13:00:00Z', sprint: false,
-    lengthKm: '5.474', laps: 56, distanceKm: '306.544', winner: 'G. Russell',
-    trackPath: 'M70 210 L225 210 L250 180 L285 195 L330 165 L385 165 L425 120 L400 75 L350 60 L310 85 L275 65 L240 100 L205 90 L180 135 L135 130 L110 165 L80 160 Z',
-  },
-  {
-    id: 'azerbaijan', round: 17, country: 'Azerbaijan', title: 'Azerbaijan',
-    circuit: 'Baku City Circuit', flag: 'AZ',
-    date: '2026-09-27T11:00:00Z', sprint: false,
-    lengthKm: '6.003', laps: 51, distanceKm: '306.049', winner: 'O. Piastri',
-    trackPath: 'M60 215 L425 215 L425 175 L365 175 L365 135 L320 135 L320 95 L280 95 L280 60 L245 60 L245 95 L205 95 L205 125 L165 125 L165 155 L115 155 L115 185 L60 185 Z',
-  },
-  {
-    id: 'singapore', round: 18, country: 'Singapore', title: 'Singapore',
-    circuit: 'Marina Bay Street Circuit', flag: 'SG',
-    date: '2026-10-11T12:00:00Z', sprint: false,
-    lengthKm: '4.940', laps: 62, distanceKm: '306.143', winner: 'L. Norris',
-    trackPath: 'M70 210 L220 210 L220 180 L265 180 L265 210 L395 210 L425 175 L400 140 L360 140 L360 100 L315 100 L315 70 L270 70 L245 105 L200 105 L200 75 L145 75 L145 130 L105 130 L105 170 L70 170 Z',
-  },
-  {
-    id: 'united-states', round: 19, country: 'United States', title: 'United States',
-    circuit: 'Circuit of the Americas', flag: 'US',
-    date: '2026-10-18T19:00:00Z', sprint: true,
-    lengthKm: '5.513', laps: 56, distanceKm: '308.405', winner: 'M. Verstappen',
-    trackPath: 'M65 215 L165 210 L210 175 L250 190 L300 135 L360 115 L425 80 L395 50 L330 85 L295 70 L270 105 L240 85 L210 125 L180 110 L150 150 L125 135 L100 175 L70 175 Z',
-  },
-  {
-    id: 'mexico-city', round: 20, country: 'Mexico', title: 'Mexico City',
-    circuit: 'Autódromo Hermanos Rodríguez', flag: 'MX',
-    date: '2026-10-25T20:00:00Z', sprint: false,
-    lengthKm: '4.304', laps: 71, distanceKm: '305.354',
-    trackPath: 'M63 205 L399 205 Q426 205 426 181 L426 153 L382 153 L382 124 L346 124 L346 91 L312 91 L295 115 L272 90 L249 115 L225 90 L201 113 L170 83 L128 83 L128 115 L94 115 L94 156 L63 156 Z',
-  },
-  {
-    id: 'sao-paulo', round: 21, country: 'Brazil', title: 'São Paulo',
-    circuit: 'Autódromo José Carlos Pace', flag: 'BR',
-    date: '2026-11-08T17:00:00Z', sprint: true,
-    lengthKm: '4.309', laps: 71, distanceKm: '305.879',
-    trackPath: 'M75 205 L350 205 Q420 205 425 160 Q425 120 385 95 L330 70 L280 75 L250 115 L215 95 L180 115 L195 150 L235 155 L250 180 L200 185 L165 160 L125 165 L105 140 L75 165 Z',
-  },
-  {
-    id: 'las-vegas', round: 22, country: 'United States', title: 'Las Vegas',
-    circuit: 'Las Vegas Strip Circuit', flag: 'US',
-    date: '2026-11-22T04:00:00Z', sprint: false,
-    lengthKm: '6.201', laps: 50, distanceKm: '309.958',
-    trackPath: 'M65 215 L430 215 L430 155 L380 155 L380 115 L310 115 L310 70 L250 70 L250 100 L205 100 L205 65 L150 65 L150 125 L105 125 L105 170 L65 170 Z',
-  },
-  {
-    id: 'qatar', round: 23, country: 'Qatar', title: 'Qatar',
-    circuit: 'Lusail International Circuit', flag: 'QA',
-    date: '2026-11-29T16:00:00Z', sprint: true,
-    lengthKm: '5.419', laps: 57, distanceKm: '308.611',
-    trackPath: 'M80 215 L385 215 L415 180 L385 150 L345 165 L320 135 L345 105 L315 75 L280 90 L250 60 L215 80 L190 65 L160 100 L175 130 L140 150 L110 130 L80 165 Z',
-  },
-  {
-    id: 'abu-dhabi', round: 24, country: 'United Arab Emirates', title: 'Abu Dhabi',
-    circuit: 'Yas Marina Circuit', flag: 'AE',
-    date: '2026-12-06T13:00:00Z', sprint: false,
-    lengthKm: '5.281', laps: 58, distanceKm: '306.183',
-    trackPath: 'M65 210 L365 210 L405 175 L375 140 L345 150 L320 115 L350 85 L310 55 L260 85 L230 75 L200 110 L155 95 L120 125 L140 155 L100 175 L70 155 Z',
-  },
 ];
-
-export const races = fixtures.map((race) => ({
-  ...race,
-  sessions: weekend(race.date, race.sprint),
-}));

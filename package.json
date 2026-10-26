@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "node server.mjs", "check": "node --check dist/app.js && node --check dist/data.js" }
+  "scripts": {
+    "dev": "node server.mjs",
+    "check": "node --check dist/app.js && node --check dist/data.js && node --check dist/session-selection.js && node --check scripts/sync-official.mjs && node scripts/verify-data.mjs",
+    "sync": "node scripts/sync-official.mjs && npm run check"
+  }
 }
