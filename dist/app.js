@@ -14,9 +14,16 @@ const sourceUrl = value => {
 };
 const main = document.querySelector('#main');
 const normalizeZone = value => value === 'Asia/Calcutta' ? 'Asia/Kolkata' : value;
-let zone = 'Asia/Kolkata';
-try { zone = normalizeZone(localStorage.getItem('lights-out-zone') || Intl.DateTimeFormat().resolvedOptions().timeZone || zone); } catch {}
-try { new Intl.DateTimeFormat('en', { timeZone: zone }); } catch { zone = 'Asia/Kolkata'; }
+function localZone() {
+  try {
+    const detected = normalizeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    if (!detected) return 'UTC';
+    new Intl.DateTimeFormat('en', { timeZone: detected });
+    return detected;
+  } catch { return 'UTC'; }
+}
+// Start every visit in the device's current timezone; manual changes apply to this visit.
+let zone = localZone();
 let selectedSession;
 let autoSelectSession = true;
 let followNextWeekend = true;
@@ -42,7 +49,7 @@ function zoneLabel(iso) {
 }
 function calendarZoneLabel() { return zone === 'Asia/Kolkata' ? 'India' : zone.split('/').at(-1).replaceAll('_', ' '); }
 function zoneOptions() {
-  const local = normalizeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const local = localZone();
   const zones = [...new Set([local, currentRace?.timezone, 'Asia/Kolkata', 'UTC', 'America/Chicago', 'America/Mexico_City', 'America/Sao_Paulo', 'America/Los_Angeles', 'Europe/London', 'Asia/Qatar', 'Asia/Dubai', zone].filter(Boolean))];
   const names = { 'Asia/Kolkata': 'India · IST', UTC: 'Universal · UTC', 'America/Chicago': 'Austin · Central', 'America/Mexico_City': 'Mexico City', 'America/Sao_Paulo': 'São Paulo', 'America/Los_Angeles': 'Los Angeles', 'Europe/London': 'London', 'Asia/Qatar': 'Qatar', 'Asia/Dubai': 'Abu Dhabi' };
   return zones.map(z => `<option value="${escapeHtml(z)}" ${z === zone ? 'selected' : ''}>${escapeHtml(names[z] || z.split('/').at(-1).replaceAll('_', ' '))}${z === currentRace?.timezone ? ' · track' : ''}${z === local ? ' (local)' : ''}</option>`).join('');
@@ -192,7 +199,6 @@ document.addEventListener('click', event => {
 document.addEventListener('change', event => {
   if (event.target.id !== 'timezone') return;
   zone = normalizeZone(event.target.value);
-  try { localStorage.setItem('lights-out-zone', zone); } catch {}
   renderRace(currentRace);
   document.querySelector('#timezone').focus({ preventScroll: true });
 });

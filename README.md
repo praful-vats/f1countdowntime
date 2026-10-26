@@ -13,7 +13,7 @@ Run `npm run dev` (or `node server.mjs`) in this directory, then open [the local
 - Session selection for FP1, FP2, FP3, qualifying and Race.
 - Sprint weekends with sprint qualifying and sprint in place of FP2/FP3.
 - Upcoming, past and full-season calendars.
-- Timezone selection, retained in the browser, including the selected circuit's timezone. Session dates and times use this selection; weekend date ranges always use dates at the circuit.
+- Times default to the visitor’s current device timezone on every visit. The timezone selector, including the selected circuit’s timezone, supports manual changes for the current visit. Session dates and times use this selection; weekend date ranges always use dates at the circuit.
 - Responsive layout, keyboard controls and reduced-motion support.
 
 ## Official schedule snapshot
