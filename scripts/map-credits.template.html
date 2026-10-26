@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Circuit Collection — Lights Out</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .collection-header{max-width:1280px;margin:0 auto;padding:0 36px;height:96px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    .collection-header .back{font-size:11px;display:flex;align-items:center;gap:22px}
+    .map-library{max-width:1280px;margin:0 auto;padding:48px 36px 0}
+    .collection-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;padding-bottom:38px}
+    .collection-intro .eyebrow{color:var(--red);font-size:9px;letter-spacing:1.5px;margin-bottom:18px}
+    .collection-title{font:800 clamp(60px,7.5vw,110px)/.85 var(--display);letter-spacing:-1px;margin:0;text-transform:uppercase}
+    .collection-intro p{font-size:12px;line-height:1.7;color:var(--muted);max-width:240px;margin:0 0 4px}
+    .collection-bar{border-top:1px solid var(--ink);padding:16px 0;display:flex;justify-content:space-between;font-size:9px;letter-spacing:1px;text-transform:uppercase}
+    .collection-bar a{color:var(--muted)}
+    .map-collection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--line);border-top:1px solid var(--line)}
+    .collection-card{padding:24px 25px 21px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-width:0}
+    .collection-card .card-meta{display:flex;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+    .collection-card .card-meta b{font-weight:500;color:var(--red)}
+    .collection-card h2{font:700 43px/.95 var(--display);letter-spacing:-.4px;text-transform:uppercase;margin:22px 0 0}
+    .map-drawing{height:204px;margin:22px 0 20px;display:flex;align-items:center;justify-content:center;background-image:radial-gradient(#6e736019 .65px,transparent .65px);background-size:10px 10px}
+    .map-drawing img{display:block;width:100%;height:100%;object-fit:contain;padding:10px 6px;image-rendering:auto}
+    .collection-card .venue{font-size:10px;line-height:1.6;margin:0 0 14px;min-height:32px;color:var(--muted)}
+    .collection-links{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:13px;font-size:9px}
+    .collection-card .credit{font-size:7px;line-height:1.6;color:var(--muted);margin:14px 0 0}
+    .collection-sources{margin:35px 0 0;padding:24px 0;border-top:1px solid var(--line);max-width:800px;font-size:10px;line-height:1.8;color:var(--muted)}
+    .collection-sources h2{font-size:10px;font-weight:500;color:var(--ink);letter-spacing:1px;text-transform:uppercase;margin:0 0 12px}
+    .collection-sources a{text-decoration:underline;text-underline-offset:3px}
+    .collection-footer{max-width:1280px;margin:0 auto;padding:25px 36px;min-height:0;display:flex;justify-content:space-between;font-size:8px;letter-spacing:.5px;text-transform:uppercase}
+    @media(max-width:900px){.map-collection{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-intro{align-items:flex-start}.collection-intro p{max-width:180px}.collection-title{font-size:78px}}
+    @media(max-width:540px){.collection-header{padding:0 20px;height:78px}.collection-header .brand{font-size:18px}.collection-header .back{font-size:9px;gap:12px}.map-library{padding:32px 20px 0}.collection-intro{display:block;padding-bottom:30px}.collection-title{font-size:68px}.collection-intro p{max-width:none;margin-top:22px;font-size:11px}.collection-bar{font-size:8px}.map-collection{grid-template-columns:1fr}.collection-card{padding:23px}.collection-card h2{font-size:46px}.map-drawing{height:210px}.collection-footer{padding:24px 20px;font-size:7px;gap:20px}}
+  </style>
+</head>
+<body>
+  <header class="collection-header">
+    <a class="brand" href="./#next" aria-label="Lights Out home"><svg viewBox="0 0 60 36" aria-hidden="true"><path d="M2 29 24 7h18L20 29Zm26 0L50 7h8L36 29Z" fill="currentColor"/></svg><span>LIGHTS OUT<span class="brand-dot">®</span></span></a>
+    <a class="back" href="./#next">Back to countdown <span>↗</span></a>
+  </header>
+  <main class="map-library">
+    <div class="collection-intro"><div><div class="eyebrow">THE WORLD IS OUR RACETRACK / 2026</div><h1 class="collection-title">The circuit<br>collection<span style="color:var(--red)">.</span></h1></div><p>23 circuits. One season.<br>The corners, straights and silhouettes that make each weekend its own.</p></div>
+    <div class="collection-bar"><span>2026 / ALL CIRCUITS</span><a href="#sources">Sources &amp; credits ↘</a></div>
+    <section class="map-collection" aria-label="Circuit map sources">{{CARDS}}</section>
+    <section class="collection-sources" id="sources"><h2>Sources &amp; credits</h2><p>These independently drawn track layouts use geographic course coordinates, as simplified illustrations. Proportions are preserved; some layouts are rotated to fit.</p><p>Map data from <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a> is available under the <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL 1.0)</a>. Additional circuit coordinates: © Tomislav Bacinger, used under the <a href="./map-data/LICENSE-bacinger.txt">MIT license</a>. Source coordinates are available for every circuit above.</p></section>
+  </main>
+  <footer class="collection-footer"><span>Independent racing culture.</span><a href="./#next">Every session. Every second. ↗</a></footer>
+</body>
+</html>

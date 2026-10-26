@@ -1,6 +1,7 @@
 import { races, scheduleMeta } from './data.js';
 import { iconPaths } from './icons.js';
 import { defaultSession } from './session-selection.js';
+import { pixelTracks } from './track-data.js';
 
 // Compare the verified schedule snapshot with the visitor's current clock.
 const now = () => Date.now();
@@ -48,8 +49,10 @@ function zoneOptions() {
 }
 function zoneSelect() { return `<label class="timezone-control">${globeIcon}<span class="sr-only">Display timezone</span><select id="timezone" aria-label="Display timezone">${zoneOptions()}</select></label>`; }
 function track(r, className = '') {
-  const asset = /^\.\/tracks\/[a-z0-9-]+\.svg$/i.test(r.trackAsset) ? r.trackAsset : '';
-  return `<div class="track-map ${className}" style="--track-image:url('${escapeHtml(asset)}')" aria-label="${escapeHtml(r.circuit)} circuit outline from Formula1.com" role="img"></div>`;
+  const candidate = pixelTracks[r.id]?.asset;
+  const asset = typeof candidate === 'string' && /^\.\/tracks\/[a-z0-9-]+\.svg$/i.test(candidate) ? candidate : '';
+  if (!asset) return `<div class="track-map track-map-unavailable ${className}" role="img" aria-label="${escapeHtml(r.circuit)} track layout unavailable"><span>MAP UNAVAILABLE</span></div>`;
+  return `<div class="track-map ${className}" style="--track-image:url('${escapeHtml(asset)}')" aria-label="${escapeHtml(r.circuit)} stylised track layout" role="img"></div>`;
 }
 const trackDate = (value, options) => new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', ...options }).format(new Date(`${value}T12:00:00Z`));
 function dateRange(r) {
@@ -93,7 +96,7 @@ function renderRace(r) {
         <p class="official-race-name">${escapeHtml(r.officialName)}</p>
         <div class="hero-bottom"><span class="date-inline" title="Weekend dates at the circuit">${calendarIcon}${escapeHtml(dateRange(r).toUpperCase())} ${escapeHtml(scheduleMeta.season)}</span><button class="outline-link" data-action="calendar">Explore the calendar ${arrow}</button></div>
       </div>
-      <div class="circuit-panel"><div class="micro"><span>CIRCUIT STUDY / ${escapeHtml(pad(r.round))}</span><a class="source-link" href="${escapeHtml(sourceUrl(r.trackSourceUrl || r.sourceUrl))}" target="_blank" rel="noopener noreferrer" aria-label="View official ${escapeHtml(r.circuit)} circuit source">FORMULA1.COM ↗</a></div>${track(r)}<div class="circuit-stats"><div><span>LENGTH</span>${escapeHtml(r.lengthKm)} KM</div><div><span>LAPS</span>${escapeHtml(r.laps)}</div><div><span>DISTANCE</span>${escapeHtml(r.distanceKm)} KM</div></div></div>
+      <div class="circuit-panel"><div class="micro"><span>CIRCUIT STUDY / ${escapeHtml(pad(r.round))}</span><a class="source-link" href="./map-credits.html" target="_blank" rel="noopener noreferrer" aria-label="Track map sources and credits">MAP CREDITS ↗</a></div>${track(r)}<div class="circuit-stats"><div><span>LENGTH</span>${escapeHtml(r.lengthKm)} KM</div><div><span>LAPS</span>${escapeHtml(r.laps)}</div><div><span>DISTANCE</span>${escapeHtml(r.distanceKm)} KM</div></div></div>
     </section>
     <section class="countdown-panel" aria-label="${escapeHtml(s.name)} countdown">
       <div class="timer-top"><div class="micro"><span class="lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="timer-caption"></span></div><span class="timer-round">FORMULA ONE / ${escapeHtml(pad(r.round))} OF ${races.length}</span></div>

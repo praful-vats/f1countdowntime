@@ -1,0 +1,3 @@
+# Keep generated artwork and source geometry byte-identical across platforms.
+dist/tracks/*.svg -text
+*.geojson -text

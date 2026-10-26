@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -13,7 +12,7 @@ const sessionIds = { p1:'fp1', p2:'fp2', p3:'fp3', q:'qualifying', ss:'sq', s:'s
 await fs.mkdir(cache, { recursive: true });
 
 async function download(url) {
-  const allowed = ['www.formula1.com', 'media.formula1.com'];
+  const allowed = ['www.formula1.com'];
   if (!allowed.includes(new URL(url).hostname)) throw new Error(`Unexpected source host: ${url}`);
   const response = await fetch(url, { signal: AbortSignal.timeout(45000) });
   if (!response.ok) throw new Error(`Official source returned ${response.status}: ${url}`);
@@ -58,7 +57,6 @@ const links = [...new Set([...calendar.matchAll(new RegExp(`href="(/en/racing/${
   .filter(url => !url.includes('pre-season-testing'));
 if (links.length < 15 || links.length > 30) throw new Error('Unexpected calendar size; review before replacing data');
 const records = [];
-const outlines = [];
 for (let offset = 0; offset < links.length; offset += 4) {
   const batch = await Promise.all(links.slice(offset, offset + 4).map(async href => {
     const slug = href.split('/').at(-1);
@@ -69,11 +67,6 @@ for (let offset = 0; offset < links.length; offset += 4) {
     const raw = readObject(flight, '{"meetingSessions":');
     if (String(raw.season) !== String(season) || raw.url !== href) throw new Error(`Race identity mismatch: ${href}`);
     await fs.writeFile(path.join(cache, `${slug}-record.json`), JSON.stringify(raw, null, 2));
-    const publicId = flight.match(/"circuitImage":\{"public_id":"([^"]+)"/)?.[1];
-    if (!publicId?.startsWith(`common/f1/${season}/track/`) || !publicId.endsWith('blackoutline')) throw new Error(`Missing official circuit outline: ${slug}`);
-    const trackSourceUrl = `https://media.formula1.com/image/upload/${publicId}.svg`;
-    const svg = await download(trackSourceUrl);
-    if (!svg.includes('<svg') || !svg.includes('viewBox=') || /<script|<foreignObject|\bon\w+\s*=|(?:href|src)\s*=/i.test(svg)) throw new Error(`Invalid outline asset: ${slug}`);
     const id = aliases[slug] || slug;
     const sessions = raw.meetingSessions.map(s => {
       if (!sessionIds[s.session]) throw new Error(`Unknown F1 session ${s.session}`);
@@ -92,12 +85,12 @@ for (let offset = 0; offset < links.length; offset += 4) {
       date:raceSession.start, dateStart:raw.meetingStartDate.slice(0,10), dateEnd:raw.meetingEndDate.slice(0,10),
       timezone:raw.meetingTimezone, sprint:sessions.some(s=>s.id==='sprint'),
       lengthKm:track.trackLength, laps:Number(raw.scheduledLapCount), distanceKm:raw.scheduledDistance,
-      sessions, trackAsset:`./tracks/${id}.svg`, trackSourceUrl, trackSha256:createHash('sha256').update(svg).digest('hex'), sourceUrl:pageUrl,
+      sessions, sourceUrl:pageUrl,
     };
-    console.log(`${String(race.round).padStart(2,'0')} ${race.title}: ${sessions.length} sessions, ${race.sprint ? 'Sprint' : 'standard'}, official SVG`);
-    return { race, svg };
+    console.log(`${String(race.round).padStart(2,'0')} ${race.title}: ${sessions.length} sessions, ${race.sprint ? 'Sprint' : 'standard'}`);
+    return race;
   }));
-  for (const {race,svg} of batch) { records.push(race); outlines.push({id:race.id,svg}); }
+  records.push(...batch);
 }
 
 records.sort((a,b)=>a.round-b.round);
@@ -105,11 +98,9 @@ if (records.some((r,i)=>r.round!==i+1)) throw new Error('Non-contiguous official
 if (records.some((r,i)=>i && r.date<=records[i-1].date)) throw new Error('Calendar date order disagrees with round order');
 const checkedAt = new Date().toISOString();
 const meta = {season,checkedAt,sourceUrl,totalRounds:records.length,updateMode:'verified-snapshot'};
-const output = `// Verified schedule and unmodified circuit outlines from Formula1.com.\n// Regenerate with: node scripts/sync-official.mjs\nexport const scheduleMeta = ${JSON.stringify(meta,null,2)};\n\nexport const races = ${JSON.stringify(records,null,2)};\n`;
-// Nothing replaces the usable data until every official race and SVG passes validation.
-await fs.mkdir(path.join(root,'dist/tracks'),{recursive:true});
-for (const {id,svg} of outlines) await fs.writeFile(path.join(root,`dist/tracks/${id}.svg`),svg);
+const output = `// Verified schedule from Formula1.com; map artwork is independently generated.\n// Regenerate with: node scripts/sync-official.mjs\nexport const scheduleMeta = ${JSON.stringify(meta,null,2)};\n\nexport const races = ${JSON.stringify(records,null,2)};\n`;
+// Keep the previous schedule until all official records have passed validation.
 await fs.writeFile(path.join(root,'dist/data.js.tmp'),output);
 await fs.rename(path.join(root,'dist/data.js.tmp'),path.join(root,'dist/data.js'));
-await fs.writeFile(path.join(cache,'verification.json'),JSON.stringify({checkedAt,races:records.map(r=>({id:r.id,round:r.round,sourceUrl:r.sourceUrl,trackSourceUrl:r.trackSourceUrl,trackSha256:r.trackSha256}))},null,2));
-console.log(`Verified and saved ${records.length} weekends and unchanged official outlines at ${checkedAt}.`);
+await fs.writeFile(path.join(cache,'verification.json'),JSON.stringify({checkedAt,races:records.map(r=>({id:r.id,round:r.round,sourceUrl:r.sourceUrl}))},null,2));
+console.log(`Verified and saved ${records.length} weekends at ${checkedAt}.`);

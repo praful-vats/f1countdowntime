@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { races, scheduleMeta } from '../dist/data.js';
 import { defaultSession } from '../dist/session-selection.js';
+import { pixelTracks } from '../dist/track-data.js';
 
 // Independent expectations from the official calendar verified 24 October 2026.
 // Review these against Formula1.com if a subsequent official amendment changes them.
@@ -49,11 +50,20 @@ for (const [index, race] of races.entries()) {
     assert.ok(localDay >= race.dateStart && localDay <= race.dateEnd, `${race.id}/${session.id}: circuit-local weekend dates`);
   }
   assert.equal(race.date, race.sessions.at(-1).start, `${race.id}: race start matches final session`);
-  assert.equal(race.trackAsset, `./tracks/${race.id}.svg`);
-  assert.match(race.trackSourceUrl, /^https:\/\/media\.formula1\.com\/image\/upload\/common\/f1\/2026\/track\/.+blackoutline\.svg$/);
-  const svg = await readFile(new URL(`../dist/tracks/${race.id}.svg`, import.meta.url));
-  assert.equal(createHash('sha256').update(svg).digest('hex'), race.trackSha256, `${race.id}: original SVG checksum`);
-  assert.match(svg.toString(), /<svg\b[^>]*\bviewBox=/, `${race.id}: proportional SVG viewBox`);
+  const track = pixelTracks[race.id];
+  assert.equal(track.asset, './tracks/' + race.id + '.svg');
+  assert.ok(['ODbL-1.0','MIT'].includes(track.license), race.id + ': geometry license');
+  assert.ok(track.credit && track.sourceUrl && track.geometryAsset, race.id + ': map attribution');
+  assert.ok(Math.abs(track.measuredMetres - Number(race.lengthKm)*1000)/(Number(race.lengthKm)*1000) < .03, race.id + ': correct full-course distance');
+  const svg = await readFile(new URL('../dist/tracks/' + race.id + '.svg', import.meta.url));
+  assert.equal(createHash('sha256').update(svg).digest('hex'), track.sha256, race.id + ': generated pixel SVG checksum');
+  assert.match(svg.toString(), /shape-rendering="geometricPrecision"/, race.id + ": refined vector artwork");
+  assert.match(svg.toString(), /stroke-linejoin="round"/, race.id + ": smooth corners");
+  const geometry = await readFile(new URL('../dist/map-data/' + race.id + '.geojson', import.meta.url));
+  assert.equal(createHash('sha256').update(geometry).digest('hex'), track.geometrySha256, race.id + ': published source geometry checksum');
+  const course = JSON.parse(geometry).features[0].geometry.coordinates;
+  assert.deepEqual(course[0], course.at(-1), race.id + ': closed full circuit');
+  assert.ok(!('trackSourceUrl' in race), race.id + ': official artwork removed');
 }
 
 // Values independently cross-checked against official full timetables, not the importer.
@@ -92,4 +102,4 @@ assert.equal(defaultSession(us, Date.parse('2026-10-24T21:00:00Z')).id, 'race', 
 assert.equal(defaultSession(us, Date.parse('2026-10-25T20:30:00Z')).id, 'race', 'Final active session fallback');
 assert.equal(defaultSession(us, Date.parse('2026-10-26T00:00:00Z')).id, 'race', 'Archive defaults to Race');
 
-console.log(`Verified ${races.length} rounds, ${races.reduce((sum, race) => sum + race.sessions.length, 0)} UTC sessions, 6 Sprint weekends, 23 original SVG checksums, critical official timetables and next-session selection.`);
+console.log(`Verified ${races.length} rounds, ${races.reduce((sum, race) => sum + race.sessions.length, 0)} UTC sessions, 6 Sprint weekends, 23 independent track illustrations, critical official timetables and next-session selection.`);

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
-    "check": "node --check dist/app.js && node --check dist/data.js && node --check dist/session-selection.js && node --check scripts/sync-official.mjs && node scripts/verify-data.mjs",
-    "sync": "node scripts/sync-official.mjs && npm run check"
+    "check": "node --check dist/app.js && node --check dist/data.js && node --check dist/track-data.js && node --check dist/session-selection.js && node --check scripts/sync-official.mjs && node --check scripts/build-pixel-tracks.mjs && node scripts/verify-data.mjs",
+    "sync": "node scripts/sync-official.mjs && npm run check",
+    "maps": "node scripts/build-pixel-tracks.mjs"
   }
 }

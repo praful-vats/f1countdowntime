@@ -1,5 +1,4 @@
-// Verified schedule and unmodified circuit outlines from Formula1.com.
-// Regenerate with: node scripts/sync-official.mjs
+// Verified schedule from Formula1.com; map artwork is independently generated.
 export const scheduleMeta = {
   "season": 2026,
   "checkedAt": "2026-10-26T10:43:49.714Z",
@@ -68,9 +67,6 @@ export const races = [
         "sourceSessionId": 11234
       }
     ],
-    "trackAsset": "./tracks/australia.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmelbourneblackoutline.svg",
-    "trackSha256": "935b2de528136cecbff4d9be2b8497afe072e46e466d445f55c11077671c2acd",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/australia"
   },
   {
@@ -132,9 +128,6 @@ export const races = [
         "sourceSessionId": 11245
       }
     ],
-    "trackAsset": "./tracks/china.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackshanghaiblackoutline.svg",
-    "trackSha256": "ac11f73a5499cb566457a7d46c668af40aa9b6c7c72e5728b04d9e7dcfbefaee",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/china"
   },
   {
@@ -196,9 +189,6 @@ export const races = [
         "sourceSessionId": 11253
       }
     ],
-    "trackAsset": "./tracks/japan.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksuzukablackoutline.svg",
-    "trackSha256": "cf699d42f3098789de46c7c7d42545b62d00f5422f90114c0e2a275ee28a6021",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/japan"
   },
   {
@@ -260,9 +250,6 @@ export const races = [
         "sourceSessionId": 11280
       }
     ],
-    "trackAsset": "./tracks/miami.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmiamiblackoutline.svg",
-    "trackSha256": "6b036f75f5b86b6ce17bb1e3d58b6cac8e150042a456c67bb8582202449cd8dd",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/miami"
   },
   {
@@ -324,9 +311,6 @@ export const races = [
         "sourceSessionId": 11291
       }
     ],
-    "trackAsset": "./tracks/canada.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmontrealblackoutline.svg",
-    "trackSha256": "8900134804e43687bd988b8e82828039cf2ba08af92e49212a1c185b5b185992",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/canada"
   },
   {
@@ -388,9 +372,6 @@ export const races = [
         "sourceSessionId": 11299
       }
     ],
-    "trackAsset": "./tracks/monaco.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmontecarloblackoutline.svg",
-    "trackSha256": "7a4ef43759ab12f53fb9f4c18ab2f7625dcd0213cba9f0c3bf0a0ff0f457721a",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/monaco"
   },
   {
@@ -452,9 +433,6 @@ export const races = [
         "sourceSessionId": 11307
       }
     ],
-    "trackAsset": "./tracks/barcelona.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackcatalunyablackoutline.svg",
-    "trackSha256": "b00b9950d493281f13ea72489aafba136c94acd86dd8c8d018043be751e4d10a",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/barcelona-catalunya"
   },
   {
@@ -516,9 +494,6 @@ export const races = [
         "sourceSessionId": 11315
       }
     ],
-    "trackAsset": "./tracks/austria.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackspielbergblackoutline.svg",
-    "trackSha256": "85602e828cd255e2118bfa7d90a508c9a549c352febe4c3795d33142a354c8e7",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/austria"
   },
   {
@@ -580,9 +555,6 @@ export const races = [
         "sourceSessionId": 11326
       }
     ],
-    "trackAsset": "./tracks/britain.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksilverstoneblackoutline.svg",
-    "trackSha256": "946f5de282ee0925cbcd5d02fcf3781d58d9ed34cba1eee6bfc4ce86652f3d57",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/great-britain"
   },
   {
@@ -644,9 +616,6 @@ export const races = [
         "sourceSessionId": 11334
       }
     ],
-    "trackAsset": "./tracks/belgium.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackspafrancorchampsblackoutline.svg",
-    "trackSha256": "b86fa2b406fbdc54d68e59800e75b9fead332570079a5e69a71b311978266b91",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/belgium"
   },
   {
@@ -708,9 +677,6 @@ export const races = [
         "sourceSessionId": 11342
       }
     ],
-    "trackAsset": "./tracks/hungary.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackhungaroringblackoutline.svg",
-    "trackSha256": "d2b8d27d221ed4a961cc6490db38769f32fc55e9b847a21c9c89ac152681247a",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/hungary"
   },
   {
@@ -772,9 +738,6 @@ export const races = [
         "sourceSessionId": 11353
       }
     ],
-    "trackAsset": "./tracks/netherlands.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackzandvoortblackoutline.svg",
-    "trackSha256": "7548d1f627a39679733fb55e93fb8a77896292619f410c2b784c3211bccc0669",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/netherlands"
   },
   {
@@ -836,9 +799,6 @@ export const races = [
         "sourceSessionId": 11361
       }
     ],
-    "trackAsset": "./tracks/italy.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmonzablackoutline.svg",
-    "trackSha256": "25cebbfd50eb1301dbdb0e73a029a69f9d9b92c8565515d39e7a8174845979c9",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/italy"
   },
   {
@@ -900,9 +860,6 @@ export const races = [
         "sourceSessionId": 11369
       }
     ],
-    "trackAsset": "./tracks/madrid.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmadringblackoutline.svg",
-    "trackSha256": "f4d1fe06b6199203cddcdc820cb314ab7aaa2399b8958bd8bbd69519d3f81877",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/spain"
   },
   {
@@ -964,9 +921,6 @@ export const races = [
         "sourceSessionId": 11377
       }
     ],
-    "trackAsset": "./tracks/azerbaijan.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackbakublackoutline.svg",
-    "trackSha256": "26c7d39a89774dafe328eeb730fab1f0aad84ec679bfa5711a54158ef78a2a19",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/azerbaijan"
   },
   {
@@ -1028,9 +982,6 @@ export const races = [
         "sourceSessionId": 11731
       }
     ],
-    "trackAsset": "./tracks/bahrain.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackkualalumpurblackoutline.svg",
-    "trackSha256": "e4df6c74a5d19120e9f9865eb335f0687be8a4bfa28c9ea3e870632df1573619",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/bahrain"
   },
   {
@@ -1092,9 +1043,6 @@ export const races = [
         "sourceSessionId": 11388
       }
     ],
-    "trackAsset": "./tracks/singapore.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracksingaporeblackoutline.svg",
-    "trackSha256": "aa2ccd41ee4f01cf2d77e645d3499198585d7817483657b6930ccc6ace5996bc",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/singapore"
   },
   {
@@ -1156,9 +1104,6 @@ export const races = [
         "sourceSessionId": 11396
       }
     ],
-    "trackAsset": "./tracks/united-states.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackaustinblackoutline.svg",
-    "trackSha256": "3c0a75372b3223daeb6dec1558e9b4c16bd4860872f78ab90e5b076d0ad536c2",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/united-states"
   },
   {
@@ -1220,9 +1165,6 @@ export const races = [
         "sourceSessionId": 11404
       }
     ],
-    "trackAsset": "./tracks/mexico-city.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackmexicocityblackoutline.svg",
-    "trackSha256": "05118c0e22e3d3ffdc061fd14c39da1f9e88ac741c688305757dbd49ce19ffe6",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/mexico"
   },
   {
@@ -1284,9 +1226,6 @@ export const races = [
         "sourceSessionId": 11412
       }
     ],
-    "trackAsset": "./tracks/sao-paulo.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackinterlagosblackoutline.svg",
-    "trackSha256": "e6c595ee86c375a69dd204c8ac32eca036bb4f65a376bef866e42ce132b85ffa",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/brazil"
   },
   {
@@ -1348,9 +1287,6 @@ export const races = [
         "sourceSessionId": 11420
       }
     ],
-    "trackAsset": "./tracks/las-vegas.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracklasvegasblackoutline.svg",
-    "trackSha256": "3fbba3ec0c219505937cea480c2803188e396f0a17f4b6661404925b8c10ccea",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/las-vegas"
   },
   {
@@ -1412,9 +1348,6 @@ export const races = [
         "sourceSessionId": 11428
       }
     ],
-    "trackAsset": "./tracks/qatar.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026tracklusailblackoutline.svg",
-    "trackSha256": "d0221d3ed8d82f5f8c2ea1b36480297dc2854491fff9f797b33641b1e1e4cc9e",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/qatar"
   },
   {
@@ -1476,9 +1409,6 @@ export const races = [
         "sourceSessionId": 11436
       }
     ],
-    "trackAsset": "./tracks/abu-dhabi.svg",
-    "trackSourceUrl": "https://media.formula1.com/image/upload/common/f1/2026/track/2026trackyasmarinacircuitblackoutline.svg",
-    "trackSha256": "52480a45a6d02e8375f79ce035dca8280d11daf89c20b14961cdc86c358a3af1",
     "sourceUrl": "https://www.formula1.com/en/racing/2026/united-arab-emirates"
   }
 ];
