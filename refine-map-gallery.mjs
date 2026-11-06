@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+const file='lights-out/scripts/build-pixel-tracks.mjs';
+let source=await fs.readFile(file,'utf8');
+const start=source.indexOf('const cards=races.map');
+const end=source.indexOf("await fs.writeFile(path.join(root,'dist/map-credits.html')",start);
+if(start<0||end<0)throw new Error('Missing gallery template');
+const replacement=`const cards=races.map(r=>{const map=entries[r.id];return '<article class="collection-card"><div class="card-meta"><span>ROUND '+String(r.round).padStart(2,'0')+'</span><b>'+escape(r.country)+'</b></div><h2>'+escape(r.location)+'</h2><div class="map-drawing"><img src="'+map.asset+'" alt="'+escape(r.circuit)+' pixel track layout"></div><p class="venue">'+escape(r.circuit)+'</p><div class="collection-links"><a href="'+escape(map.sourceUrl)+'">Map source ↗</a><a href="'+map.geometryAsset+'" download>Coordinates ↓</a></div><p class="credit">'+escape(map.credit)+' · <a href="'+escape(map.licenseUrl)+'">'+map.license+'</a></p></article>';}).join('');
+const credits=(await fs.readFile(path.join(root,'scripts/map-credits.template.html'),'utf8')).replace('{{CARDS}}',cards);
+`;
+await fs.writeFile(file,source.slice(0,start)+replacement+source.slice(end));
