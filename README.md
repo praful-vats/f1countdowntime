@@ -6,6 +6,10 @@ A minimal Formula One countdown and race calendar, using a verified snapshot of 
 
 Run `npm run dev` (or `node server.mjs`) in this directory, then open [the local preview](http://127.0.0.1:4173).
 
+## Publish with GitHub Pages
+
+The workflow in `.github/workflows/pages.yml` publishes the checked-in `dist/` site to GitHub Pages whenever changes are pushed to `main`. To enable it, connect this project to a GitHub repository, push `main`, then open **Settings → Pages** and set **Source** to **GitHub Actions**. The workflow run will show the published site URL. GitHub Pages sites are public; on GitHub Free, the repository must also be public.
+
 ## Included
 
 - Next session countdown, ticking against the visitor's actual device clock. The earliest future session takes priority, even while an earlier session is within its scheduled time window. If no future session remains in the selected weekend, its active window is shown; archived weekends default to Race. Manual session selections stay selected.
