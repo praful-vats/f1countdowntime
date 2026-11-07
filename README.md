@@ -8,7 +8,7 @@ Run `npm run dev` (or `node server.mjs`) in this directory, then open [the local
 
 ## Publish with GitHub Pages
 
-The workflow in `.github/workflows/pages.yml` publishes the checked-in `dist/` site to GitHub Pages whenever changes are pushed to `main`. To enable it, connect this project to a GitHub repository, push `main`, then open **Settings → Pages** and set **Source** to **GitHub Actions**. The workflow run will show the published site URL. GitHub Pages sites are public; on GitHub Free, the repository must also be public.
+The workflow in `.github/workflows/pages.yml` publishes the checked-in `dist/` site to GitHub Pages whenever changes are pushed to the `site-deploy` branch. The site is in this separate deployment branch so it does not replace the repository’s existing `main` branch. GitHub Pages sites are public; on GitHub Free, the repository must also be public.
 
 ## Included
 
